@@ -1,0 +1,60 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "6.1.0"
+    id("io.micronaut.library") version "1.2.0"
+}
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
+
+
+
+allprojects {
+    pluginManager.withPlugin('io.micronaut.library') {
+        dependencies {
+            implementation("io.micronaut.aws:micronaut-function-aws:$micronautVersion")
+            implementation("io.micronaut:micronaut-validation:$micronautVersion")
+            implementation("io.micronaut:micronaut-runtime:$micronautVersion")
+            implementation("javax.annotation:javax.annotation-api")
+            runtimeOnly("ch.qos.logback:logback-classic")
+            testImplementation("io.micronaut:micronaut-http-client:$micronautVersion")
+            // only for see json as string
+            compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.1'
+            compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+        }
+        micronaut {
+            testRuntime("junit5")
+            processing {
+                incremental(true)
+                annotations("com.com.meli.*")
+            }
+        }
+    }
+    pluginManager.withPlugin('java') {
+        dependencies {
+            implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.941'
+            implementation "io.micronaut:micronaut-core:$micronautVersion"
+            compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+            compileOnly "org.projectlombok:lombok:$lombokVersion"
+            annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+            testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+            testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+        }
+    }
+}
+
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+}
+
+
+

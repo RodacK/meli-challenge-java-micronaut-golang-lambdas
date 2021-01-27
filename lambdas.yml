@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  quasar:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: 'com.meli.function.TopSecretHandler::execute'
+      Runtime: java11
+      CodeUri: .
+      Description: ''
+      MemorySize: 512
+      Timeout: 15
+      Role: 'arn:aws:iam::102287414076:role/service-role/quasar-role-ka836j3n'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /topsecret
+            Method: POST
+  quasar3:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: 'com.meli.function.TopSecretSplitGetHandler::execute'
+      Runtime: java11
+      CodeUri: .
+      Description: ''
+      MemorySize: 512
+      Timeout: 15
+      Role: 'arn:aws:iam::102287414076:role/service-role/quasar3-role-vartxqjn'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /topsecret_split
+            Method: GET
+  quasar2:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: 'com.meli.function.TopSecretSplitSaveHandler::execute'
+      Runtime: java11
+      CodeUri: .
+      Description: ''
+      MemorySize: 512
+      Timeout: 15
+      Role: 'arn:aws:iam::102287414076:role/service-role/quasar2-role-7qsq7l0n'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: '/topsecret_split/{satellite_name}'
+            Method: POST
+
+
+

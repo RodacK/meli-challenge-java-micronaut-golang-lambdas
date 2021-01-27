@@ -1,0 +1,8 @@
+rootProject.name="quasar"
+include 'models'
+include 'utils'
+include 'lambda-top-secret'
+include 'lambda-top-secret-split-get'
+include 'lambda-top-secret-split-save'
+include 'service-database'
+

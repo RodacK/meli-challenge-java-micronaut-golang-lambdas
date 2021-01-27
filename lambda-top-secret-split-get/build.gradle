@@ -1,0 +1,12 @@
+plugins {
+    id("com.github.johnrengelman.shadow")
+    id("io.micronaut.library")
+}
+
+dependencies {
+    implementation project(':models')
+    implementation project(':utils')
+    implementation project(':service-database')
+    configurations.compile.exclude(group: 'org.projectlombok',module:'lombok')
+}
+

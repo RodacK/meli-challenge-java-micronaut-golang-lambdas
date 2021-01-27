@@ -1,0 +1,350 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "endpints para los rebeldes",
+    "version": "2021-01-23T13:08:54Z",
+    "title": "quasar"
+  },
+  "host": "8fnvvqo2p8.execute-api.us-east-2.amazonaws.com",
+  "basePath": "/pro",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/topsecret": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "satellitesData",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/satellitesData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/satellitesResponse"
+            }
+          },
+          "404": {
+            "description": "404 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "422": {
+            "description": "422 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/topsecret_split": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/satellitesResponse"
+            }
+          },
+          "404": {
+            "description": "404 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "422": {
+            "description": "422 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/topsecret_split/{satellite_name}": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "satellite_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "satelliteWithoutName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/satelliteWithoutName"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "201 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "422": {
+            "description": "422 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "503": {
+            "description": "503 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Empty": {
+      "type": "object",
+      "title": "Empty Schema"
+    },
+    "satellitesResponse": {
+      "type": "object",
+      "required": [
+        "message",
+        "position"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "position": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    "satellitesData": {
+      "required": [
+        "satellites"
+      ],
+      "properties": {
+        "satellites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/satellite"
+          }
+        }
+      }
+    },
+    "satelliteWithoutName": {
+      "type": "object",
+      "required": [
+        "distance",
+        "message"
+      ],
+      "properties": {
+        "distance": {
+          "type": "number"
+        },
+        "message": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "errorMessage": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "satellite": {
+      "type": "object",
+      "required": [
+        "distance",
+        "message",
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "number"
+        },
+        "message": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ErrorData": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/errorMessage"
+        }
+      }
+    }
+  }
+}
