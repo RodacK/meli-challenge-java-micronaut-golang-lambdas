@@ -3,11 +3,13 @@ package com.meli.utils;
 import com.meli.enums.MessagesEnums;
 import com.meli.exceptions.QuasarException;
 import com.meli.models.Satellite;
+import io.micronaut.core.annotation.Introspected;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+@Introspected
 public class SatelliteUtils {
     public static Satellite getSatellite(List<Satellite> satelliteList, String name){
         Optional<Satellite> satellite = satelliteList.stream().filter(hasThisName(name)).findFirst();

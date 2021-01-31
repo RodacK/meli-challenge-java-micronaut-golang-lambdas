@@ -6,6 +6,6 @@ import com.meli.models.Satellite;
 import java.util.List;
 
 public interface DatabaseService {
-    public List<Satellite> getSatellites();
-    public void save(Satellite satellite);
+    List<Satellite> getSatellites();
+    void save(Satellite satellite);
 }

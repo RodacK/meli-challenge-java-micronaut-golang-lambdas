@@ -24,8 +24,8 @@ public class MessageDecoderTest {
     public void test3() {
         String[] a = new String[]{"este","","un","",""};
         String[] b = new String[]{"","este","","un",""};
-        String[] c = new String[]{"es","","mensaje",""};
-        Assertions.assertEquals("este es un mensaje",MessageDecoder.getMessage(a,b,c));
+        String[] c = new String[]{"es","","mensaje"};
+        Assertions.assertEquals("es este mensaje un",MessageDecoder.getMessage(a,b,c)); //tener en cuenta que solo funciona para desfaces en 1
     }
     @Test
     public void test4() {

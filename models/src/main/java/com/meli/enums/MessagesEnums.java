@@ -1,8 +1,10 @@
 package com.meli.enums;
 
+import io.micronaut.core.annotation.Introspected;
 import lombok.Getter;
 
 @Getter
+@Introspected
 public enum MessagesEnums {
 
     //-------------top-secret-save
@@ -14,7 +16,9 @@ public enum MessagesEnums {
     INVALID_SATELLITE_MESSAGE("422","104","Mensaje del Satelite a guardar no valido. Verifique que no este vacio o nulo."),
     //-------------top-secret-get
     SATELLITE_NOT_FOUND("422","105","No se puede completar el proceso porque falta informacion del satelite %s."),
-    TRILATERATION_ERROR("422","106","No se puede completar el proceso porque los datos ingresados previamente vuelven indeterminado el resultado");
+    TRILATERATION_ERROR("422","106","No se puede completar el proceso porque los datos ingresados previamente vuelven indeterminado el resultado"),
+    //-------------top-secret
+    INVALID_DISTANCES("422","107","No se puede completar el proceso, verifique que las distancias no sea negativas");
 
     private String httpCode;
     private String code;

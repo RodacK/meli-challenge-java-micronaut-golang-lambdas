@@ -14,8 +14,6 @@ subprojects {
     }
 }
 
-
-
 allprojects {
     pluginManager.withPlugin('io.micronaut.library') {
         dependencies {
@@ -25,16 +23,10 @@ allprojects {
             implementation("javax.annotation:javax.annotation-api")
             runtimeOnly("ch.qos.logback:logback-classic")
             testImplementation("io.micronaut:micronaut-http-client:$micronautVersion")
-            // only for see json as string
-            compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.1'
-            compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+            testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.7.7'
         }
         micronaut {
             testRuntime("junit5")
-            processing {
-                incremental(true)
-                annotations("com.com.meli.*")
-            }
         }
     }
     pluginManager.withPlugin('java') {
@@ -49,7 +41,6 @@ allprojects {
         }
     }
 }
-
 
 java {
     sourceCompatibility = JavaVersion.toVersion("11")

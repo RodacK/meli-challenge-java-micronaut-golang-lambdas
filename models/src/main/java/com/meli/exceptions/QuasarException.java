@@ -1,5 +1,8 @@
 package com.meli.exceptions;
 
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected
 public class QuasarException extends RuntimeException {
     public QuasarException(String message){super(message);}
 

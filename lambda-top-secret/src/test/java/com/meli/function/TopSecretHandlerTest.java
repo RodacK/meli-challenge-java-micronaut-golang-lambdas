@@ -1,8 +1,10 @@
 package com.meli.function;
 
+import com.meli.models.EmptyRequest;
 import com.meli.models.Satellite;
 import com.meli.models.SatellitesRequest;
 import com.meli.models.SatellitesResponse;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -23,8 +25,10 @@ public class TopSecretHandlerTest{
         Satellite satelliteC = Satellite.builder().name("sato").distance("13").message(new ArrayList<>(Arrays.asList(c))).build();
         List<Satellite> satellites = List.of(satelliteA,satelliteB,satelliteC);
         SatellitesRequest request = new SatellitesRequest();
+
         request.setSatellites(satellites);
+
         SatellitesResponse response = function.execute(request);
-        System.out.println(response.getPosition().getX()+"-"+response.getPosition().getY());
+        Assertions.assertEquals("hola este es un mensaje",response.getMessage());
     }
 }
