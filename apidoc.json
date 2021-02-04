@@ -59,7 +59,44 @@
           {
             "api_key": []
           }
-        ]
+        ],
+        "x-amazon-apigateway-request-validator": "Cuerpo validado",
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:102287414076:function:quasar/invocations",
+          "httpMethod": "POST",
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n{\n    \"position\":{\n        \"x\": $inputRoot.position.x,\n        \"y\": $inputRoot.position.y\n        },\n    \"message\": \"$inputRoot.message\"\n}"
+              }
+            },
+            "^422.+": {
+              "statusCode": "422",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            },
+            "^500.+": {
+              "statusCode": "500",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            },
+            "^404.+": {
+              "statusCode": "404",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "#set($inputRoot = $input.path('$'))\n{\n    \"satellites\": [\n        {\n            \"name\": \"$inputRoot.satellites[0].name\",\n            \"distance\": $inputRoot.satellites[0].distance,\n            \"message\": $inputRoot.satellites[0].message\n        },\n        {\n            \"name\": \"$inputRoot.satellites[1].name\",\n            \"distance\": $inputRoot.satellites[1].distance,\n            \"message\": $inputRoot.satellites[1].message\n        },\n        {\n            \"name\": \"$inputRoot.satellites[2].name\",\n            \"distance\": $inputRoot.satellites[2].distance,\n            \"message\": $inputRoot.satellites[2].message\n        }\n    ]\n}\n    \n"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
       },
       "options": {
         "consumes": [
@@ -86,6 +123,23 @@
               }
             }
           }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     },
@@ -124,7 +178,40 @@
           {
             "api_key": []
           }
-        ]
+        ],
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:102287414076:function:quasar3/invocations",
+          "httpMethod": "POST",
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n{\n    \"position\":{\n        \"x\": $inputRoot.position.x,\n        \"y\": $inputRoot.position.y\n        },\n    \"message\": \"$inputRoot.message\"\n}"
+              }
+            },
+            "^422.+": {
+              "statusCode": "422",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            },
+            "^500.+": {
+              "statusCode": "500",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            },
+            "^404.+": {
+              "statusCode": "404",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
       },
       "options": {
         "consumes": [
@@ -151,6 +238,23 @@
               }
             }
           }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     },
@@ -208,7 +312,35 @@
           {
             "api_key": []
           }
-        ]
+        ],
+        "x-amazon-apigateway-request-validator": "Cuerpo validado",
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:102287414076:function:quasar2/invocations",
+          "httpMethod": "POST",
+          "responses": {
+            "default": {
+              "statusCode": "201"
+            },
+            "^422.+": {
+              "statusCode": "422",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            },
+            "^500.+": {
+              "statusCode": "500",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "#set($inputRoot = $input.path('$'))\n{\n    \"name\": \"$method.request.path.satellite_name\",\n    \"distance\": $inputRoot.distance,\n    \"message\": $inputRoot.message\n    \n}"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
       },
       "options": {
         "consumes": [
@@ -235,6 +367,23 @@
               }
             }
           }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
         }
       }
     }
@@ -345,6 +494,12 @@
           "$ref": "#/definitions/errorMessage"
         }
       }
+    }
+  },
+  "x-amazon-apigateway-request-validators": {
+    "Cuerpo validado": {
+      "validateRequestParameters": false,
+      "validateRequestBody": true
     }
   }
 }
