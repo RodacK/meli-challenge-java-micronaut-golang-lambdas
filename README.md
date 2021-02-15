@@ -50,7 +50,7 @@ Para crear la lambda en go desde cero:
 
         Compress-Archive -Path .\build\main -DestinationPath .\build\main.zip
   
-    - Darle permisos de ejecuciuon
+    - Darle permisos de ejecucion (Esto es teniendo en cuenta que se configuro WSL2 y la maquina virtual previamente)
 
              sudo chmod 777 build/main
 
