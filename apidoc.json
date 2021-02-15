@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "endpints para los rebeldes",
-    "version": "2021-02-15T05:23:04Z",
+    "version": "2021-02-15T05:31:10Z",
     "title": "quasar"
   },
   "host": "8fnvvqo2p8.execute-api.us-east-2.amazonaws.com",
@@ -321,7 +321,7 @@
             "default": {
               "statusCode": "201",
               "responseTemplates": {
-                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.split(\"-\"))\n{\n    \"data\":{\n        \"code\": \"$inputSplit[1]\",\n        \"message\": \"$inputSplit[2]\"\n    }\n}"
+                "application/json": "#set($inputRoot = $input.path('$'))\n{\n    \"data\":{\n        \"code\": \"$inputRoot.response.code\",\n        \"message\": \"$inputRoot.response.message\"\n    }\n}"
               }
             },
             "^422.+": {
