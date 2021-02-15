@@ -1,7 +1,7 @@
 Por fin terminado :')
-Esta es la collection para probar: 
-https://www.getpostman.com/collections/38bc8a7767107eb64fca
+Esta es la collection para probar:
 
+    https://www.getpostman.com/collections/38bc8a7767107eb64fca
 
 apidoc.json   => Es la definicion de los endpoints, codigos http y templates para mapear requests y responses
 
