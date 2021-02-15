@@ -51,5 +51,21 @@ Resources:
             Path: '/topsecret_split/{satellite_name}'
             Method: POST
 
+  quasargo:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: main
+      Runtime: go1.x
+      CodeUri: .
+      Description: ''
+      MemorySize: 512
+      Timeout: 15
+      Role: 'arn:aws:iam::102287414076:role/service-role/quasar2-role-7qsq7l0n'
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: '/topsecret_splitV2/{satellite_name}'
+            Method: POST
 
 

@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "endpints para los rebeldes",
-    "version": "2021-01-23T13:08:54Z",
+    "version": "2021-02-15T05:23:04Z",
     "title": "quasar"
   },
   "host": "8fnvvqo2p8.execute-api.us-east-2.amazonaws.com",
@@ -129,7 +129,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
@@ -244,7 +244,7 @@
             "default": {
               "statusCode": "200",
               "responseParameters": {
-                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
@@ -313,13 +313,16 @@
             "api_key": []
           }
         ],
-        "x-amazon-apigateway-request-validator": "Cuerpo validado",
+        "x-amazon-apigateway-request-validator": "Validar cuerpo, parámetros de cadena de consulta y encabezados",
         "x-amazon-apigateway-integration": {
           "uri": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:102287414076:function:quasar2/invocations",
           "httpMethod": "POST",
           "responses": {
             "default": {
-              "statusCode": "201"
+              "statusCode": "201",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.split(\"-\"))\n{\n    \"data\":{\n        \"code\": \"$inputSplit[1]\",\n        \"message\": \"$inputSplit[2]\"\n    }\n}"
+              }
             },
             "^422.+": {
               "statusCode": "422",
@@ -375,6 +378,144 @@
               "responseParameters": {
                 "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
                 "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "passthroughBehavior": "when_no_match",
+          "type": "mock"
+        }
+      }
+    },
+    "/topsecret_splitv2/{satellite_name}": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "satellite_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "satelliteWithoutName",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/satelliteWithoutName"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "201 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "422": {
+            "description": "422 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          },
+          "503": {
+            "description": "503 response",
+            "schema": {
+              "$ref": "#/definitions/ErrorData"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "x-amazon-apigateway-request-validator": "Validar cuerpo, parámetros de cadena de consulta y encabezados",
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:102287414076:function:quasar-go/invocations",
+          "httpMethod": "POST",
+          "responses": {
+            "default": {
+              "statusCode": "201",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.split(\"-\"))\n{\n    \"data\":{\n        \"code\": \"$inputSplit[1]\",\n        \"message\": \"$inputSplit[2]\"\n    }\n}"
+              }
+            },
+            "^422.+": {
+              "statusCode": "422",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            },
+            "^500.+": {
+              "statusCode": "500",
+              "responseTemplates": {
+                "application/json": "#set($inputRoot = $input.path('$'))\n#set($inputSplit = $inputRoot.errorMessage.split(\"-\"))\n{\n    #if($inputSplit.size() > 1)\n        \"data\":{\n            \"code\": \"$inputSplit[1]\",\n            \"message\": \"$inputSplit[2]\"\n        }\n    #else\n        \"data\":{\n            \"code\": \"$inputRoot.errorType\",\n            \"message\": \"$inputRoot.errorMessage\"\n        }\n    #end\n}"
+              }
+            }
+          },
+          "requestTemplates": {
+            "application/json": "#set($inputRoot = $input.path('$'))\n{\n    \"name\": \"$method.request.path.satellite_name\",\n    \"distance\": \"$inputRoot.distance\",\n    \"message\": $inputRoot.message\n    \n}"
+          },
+          "passthroughBehavior": "when_no_templates",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
                 "method.response.header.Access-Control-Allow-Origin": "'*'"
               }
             }
@@ -499,6 +640,10 @@
   "x-amazon-apigateway-request-validators": {
     "Cuerpo validado": {
       "validateRequestParameters": false,
+      "validateRequestBody": true
+    },
+    "Validar cuerpo, parámetros de cadena de consulta y encabezados": {
+      "validateRequestParameters": true,
       "validateRequestBody": true
     }
   }

@@ -11,12 +11,7 @@ public class TopSecretSplitSaveHandlerTest {
 
     @Test
     public void run(){
-        ArrayList list = new ArrayList<>();
-        list.add("");
-        list.add("hola");
-        list.add("");
-        Satellite satellite = Satellite.builder().distance("123.3").name("ayuwoki").message(list).build();
-        function.execute(satellite);
+
     }
 
 }
